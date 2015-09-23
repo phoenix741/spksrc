@@ -1,0 +1,15 @@
+{
+    ".url": {
+        "com.synocommunity.packages.burpui": {
+            "title": "Burp-UI",
+            "desc": "Burp-UI",
+            "icon": "images/burpui-{0}.png",
+            "type": "url",
+            "protocol": "http",
+            "port": "4973",
+            "url": "/",
+            "allUsers": true,
+            "grantPrivilege": "local"
+        }
+    }
+}

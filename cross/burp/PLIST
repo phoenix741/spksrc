@@ -1,0 +1,11 @@
+sbin:sbin/burp
+sbin:sbin/burp_ca
+sbin:sbin/bedup
+sbin:sbin/vss_strip
+rsc:etc/CA.cnf
+rsc:etc/notify_script
+rsc:etc/ssl_extra_checks_script
+rsc:etc/summary_script
+rsc:etc/timer_script
+rsc:etc/autoupgrade/server/win32/script
+rsc:etc/autoupgrade/server/win64/script
