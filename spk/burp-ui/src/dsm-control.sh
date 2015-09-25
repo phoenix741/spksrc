@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Package
-PACKAGE="burpui"
+PACKAGE="burp-ui"
 DNAME="Burp-UI"
 
 # Others
@@ -9,31 +9,26 @@ INSTALL_DIR="/usr/local/${PACKAGE}"
 PYTHON_DIR="/usr/local/python"
 PATH="${INSTALL_DIR}/bin:${INSTALL_DIR}/env/bin:${PYTHON_DIR}/bin:${PATH}"
 PYTHON="${INSTALL_DIR}/env/bin/python"
-BURPUI="${INSTALL_DIR}/env/bin/burpui"
-CONF_FILE="${INSTALL_DIR}/etc/burpui.cfg"
-PID_FILE="${INSTALL_DIR}/var/burpui.pid"
+BURPUI="${INSTALL_DIR}/env/bin/burp-ui"
+CONF_FILE="${INSTALL_DIR}/etc/burp-ui.cfg"
+PID_FILE="${INSTALL_DIR}/var/burp-ui.pid"
 USER="root"
 
 
 start_daemon ()
 {
-    su ${USER} -c "PATH=${PATH} nohup ${PYTHON} ${BURPUI} -c ${CONF_FILE} > ${INSTALL_DIR}/var/burpui.log &"
+    start-stop-daemon -S -q -m -b -N 10 -x ${PYTHON} ${BURPUI} -c ${USER} -u ${USER} -p ${PID_FILE} -- -c ${CONF_FILE} -l ${INSTALL_DIR}/var/burp-ui.log > /dev/null
 }
 
 stop_daemon ()
 {
-    su ${USER} -c "PATH=${PATH} ${PYTHON} ${BURPUI} --kill -c ${CONF_FILE}"
-    wait_for_status 1 20 || kill -9 `cat ${PID_FILE}`
-    rm -f ${PID_FILE}
+    start-stop-daemon -K -q -u ${USER} -p ${PID_FILE}
+    wait_for_status 1 20 || start-stop-daemon -K -s 9 -q -p ${PID_FILE}
 }
 
 daemon_status ()
 {
-    if [ -f ${PID_FILE} ] && kill -0 `cat ${PID_FILE}` > /dev/null 2>&1; then
-        return
-    fi
-    rm -f ${PID_FILE}
-    return 1
+    start-stop-daemon -K -q -t -u ${USER} -p ${PID_FILE}
 }
 
 wait_for_status ()

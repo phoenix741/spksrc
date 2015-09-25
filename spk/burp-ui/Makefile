@@ -1,11 +1,10 @@
-SPK_NAME = burpui
-SPK_VERS = git62c84386
+SPK_NAME = burp-ui
+SPK_VERS = 0.0.7.2
 SPK_REV = 1
 SPK_ICON = src/burpui.png
 DSM_UI_DIR = app
 
-BUILD_DEPENDS  = cross/python cross/setuptools cross/pip cross/wheel cross/$(SPK_NAME)
-WHEELS = $(SPK_NAME)==$(SPK_VERS)
+WHEELS = src/requirements.txt
 SPK_DEPENDS = "python>=2.7.6-8"
 
 MAINTAINER = SynoCommunity
@@ -33,14 +32,13 @@ include ../../mk/spksrc.spk.mk
 
 .PHONY: burpui_extra_install
 burpui_extra_install:
-	install -m 755 -d ${STAGING_DIR}/share
 	install -m 755 -d ${STAGING_DIR}/share/wheelhouse
 	install -m 644 ${WORK_DIR}/wheelhouse/* ${STAGING_DIR}/share/wheelhouse/
 	install -m 755 -d $(STAGING_DIR)/var
-	install -m 755 -d $(STAGING_DIR)/tmp
-	install -m 755 -d $(STAGING_DIR)/etc
-	install -m 600 src/burpui.cfg $(STAGING_DIR)/etc/burpui.cfg
 	install -m 755 -d $(STAGING_DIR)/app
+	install -m 755 -d $(STAGING_DIR)/etc
+	install -m 755 -d $(STAGING_DIR)/tmp
+	install -m 600 src/burp-ui.cfg $(STAGING_DIR)/etc/burp-ui.cfg
 	install -m 644 src/app/config $(STAGING_DIR)/app/config
 	install -m 755 -d $(STAGING_DIR)/app/images
 	for size in 16 24 32 48 72; do \

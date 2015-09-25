@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Package
-PACKAGE="burpui"
+PACKAGE="burp-ui"
 DNAME="Burp-UI"
 
 # Others
@@ -32,9 +32,6 @@ postinst ()
     
     # Install the wheels/requirements
     ${INSTALL_DIR}/env/bin/pip install --use-wheel --no-deps --no-index -U --force-reinstall -f ${INSTALL_DIR}/share/wheelhouse -r ${INSTALL_DIR}/share/wheelhouse/requirements.txt > /dev/null 2>&1
-
-    # Install Burp-UI
-    ${PYTHON} ${INSTALL_DIR}/share/${PACKAGE}/setup.py install --prefix=${INSTALL_DIR}/env --skip_init_scripts > /dev/null
 
     # Add firewall config
     ${SERVICETOOL} --install-configure-file --package ${FWPORTS} >> /dev/null
